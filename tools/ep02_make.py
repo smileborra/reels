@@ -28,7 +28,7 @@ SHOTS = [
     ("B", 3.0, ["벌써 2주씩이나 돼서", "아직도 실수를 하면..하~"], None, "line"),
     ("C", 2.6, ["야! 이거나 딲아!", "다 딲아!"], None, "slam"),
     ("E", 2.4, ["지금 너 뭐해야", "될 거 같애?"], None, "line"),
-    ("D", 3.4, ["조심히 가세요~"], "(인사 씹음)", "line"),
+    ("D", 3.4, ["조심히 가세요~"], "(1시간 일한 사장님, 인사 씹고 퇴근)", "line"),
 ]
 
 def frame(img, t, sec, lines, note, style, idx):
@@ -60,7 +60,7 @@ def frame(img, t, sec, lines, note, style, idx):
         d.text(((W - w) / 2, y), ln, font=f, fill=col, stroke_width=12, stroke_fill=(255, 255, 255))
         y += int(size * 1.28)
     if note and t > 0.35:
-        f = font(54)
+        f = font(fit(d, [note], 54, 940))
         w = d.textlength(note, font=f)
         d.text(((W - w) / 2, y + 10), note, font=f,
                fill=(NOTE if style != "hook" else (200, 80, 60)),
