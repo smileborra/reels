@@ -24,3 +24,6 @@
 ## 남은 일
 - media.canva.com 접근 허용 후 원본 다운로드 → 편집(ffmpeg) → ep02/reel.mp4 push
 - Windsor instagram create_video_post (account 17841400882330015), 게시 전 사용자 확인
+
+## 게시 완료
+- 2026-11-07 12:57 KST, Instagram media id 18104732684382466
