@@ -2,7 +2,7 @@
 
 Usage:
   python3 make.py p        # preview contact sheet (sheet.png)
-  python3 make.py          # render reel.mp4 + cover.jpg
+  python3 make.py          # render food_epN_reel.mp4 + food_epN_cover.jpg
 Edit EP / CARDS / COVER_SRC below for each episode.
 """
 import os, subprocess, sys
@@ -15,6 +15,7 @@ W, H, FPS = 1080, 1920, 30
 
 # ---------------- episode data ----------------
 EP = 'EP.2'
+OUT = 'food_ep' + EP.split('.')[1]   # file names: food_ep2_reel.mp4 / food_ep2_cover.jpg
 COVER_SRC = 'photos/01.jpg'
 CARDS = [  # (photo, place tag, KR title, EN title, KR comment, EN comment, crop x-center 0..1)
     ('photos/01.jpg', '숯불에 구운 무한 족발', '숯불구이 족발', 'Charcoal-Grilled Jokbal',
@@ -215,13 +216,13 @@ if __name__ == '__main__':
             frame(starts[0] + 1.5).save('card_full.png')
         print('total', round(total, 2))
         sys.exit()
-    cover.save('cover.jpg', quality=92)
+    cover.save(OUT + '_cover.jpg', quality=92)
     p = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24',
                           '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
                           '-f', 'lavfi', '-i', 'anullsrc=r=44100:cl=stereo',
                           '-map', '0:v', '-map', '1:a', '-shortest',
                           '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18', '-pix_fmt', 'yuv420p',
-                          '-c:a', 'aac', '-movflags', '+faststart', 'reel.mp4'], stdin=subprocess.PIPE)
+                          '-c:a', 'aac', '-movflags', '+faststart', OUT + '_reel.mp4'], stdin=subprocess.PIPE)
     nf = int(total * FPS)
     for fi in range(nf):
         p.stdin.write(frame(fi / FPS).tobytes())
